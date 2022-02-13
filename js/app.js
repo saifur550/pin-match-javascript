@@ -1,49 +1,72 @@
 
-function getPin(){
-    const pin = Math.round(Math.random() * 10000);
-    const pinString = pin + '';
-    if(pinString.length == 4){
-        return pin;
-    }else{
-        return getPin();
-    }  
-};
+function getPin() {
+    const pinNumber = Math.round(Math.random() * 10000);
+    const pinString = pinNumber  + '';
 
-function generatePin(){
-    const pin = getPin ();
-    document.getElementById('display-pin').value = pin;  
-};
-
-document.getElementById('key-pad').addEventListener('click', function(event){
-    // console.log(event.target.innerText);
-    const number = event.target.innerText;
-    const calcInput = document.getElementById('typed-numbers');
-    if(isNaN(number)){
-        // console.log(number);
-        if(number == 'C'){
-            calcInput.value = '';
-        }
-    }else{
-    const preNumber = calcInput.value;
-    const newNumber = preNumber + number;
-    calcInput.value  = newNumber ;
+    if (pinString.length == 4){
+        return pinNumber
     }
-    
-});
+   else {
+       console.log(' got 3 digit number and call again start function again', pinNumber);
+       return getPin()
+   }  
+}
+
+
+
+
+
+function generatePin() {
+    const pinNumber = getPin()
+    document.getElementById('display-pin').value = pinNumber
+    console.log(pinNumber);
+}
+
+
+
+
+
+document.getElementById('key-pad').addEventListener('click' , function(e){
+   const keyNum = e.target.innerText;
+
+   const calcInput = document.getElementById('typed-numbers');
+
+   if(isNaN(keyNum)){
+       console.log(keyNum);
+
+       if(keyNum == 'C'){
+           calcInput.value = ' '
+       }
+   }
+
+   else{
+   
+    const preCalc = calcInput.value;
+    const newCalc = preCalc + keyNum
+    calcInput.value = newCalc
+    console.log(keyNum);
+   }
+  
+})
 
 
 function verifyPin(){
-    const pin =  document.getElementById('display-pin').value;
-    const typedNumbers = document.getElementById('typed-numbers').value;
+   const pin = document.getElementById('display-pin').value;
+   const type = document.getElementById('typed-numbers').value;
+   const messageSuccess = document.getElementById('notify-success');
+   const messageFail = document.getElementById('notify-fail');
 
-    const successMessages = document.getElementById('notify-success');
-    const failError = document.getElementById('notify-fail');
+   if (pin == type){
+       console.log('pin match');
+      
+       messageSuccess.style.display ='block'
+       messageFail.style.display ='none'
+   }else{
+       console.log('doe not match');
+      
+       messageFail.style.display ='block'
+       messageSuccess.style.display ='none'
+   }
 
-    if (pin == typedNumbers){
-         successMessages.style.display ='block'  
-         failError.style.display ='none'
-    }else{
-        successMessages.style.display ='none'  
-        failError.style.display ='block'
-    }
+   
 }
